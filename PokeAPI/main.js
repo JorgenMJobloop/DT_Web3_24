@@ -7,7 +7,9 @@ getPokemon.addEventListener("click", async () => {
         const getRandomID = Math.floor(Math.random() * 898) + 1;
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${getRandomID}`);
         const pokemon = await response.json();
+        //console.log(pokemon);
         displayPokemonData(pokemon);
+        //playPokemonSound(getRandomID);
     }
     catch (error) {
         console.error("Error fetching Pokémon data from the API: ", error);
@@ -26,14 +28,16 @@ function displayPokemonData(pokemon) {
     // create images
     const imageElement = document.createElement("img");
     const spriteURL = pokemon.sprites.front_default;
-    const shiny = pokemon.sprites.front_shiny;
-    if (spriteURL && shiny) {
+    //const shiny = pokemon.sprites.front_shiny;
+    if (spriteURL) {
         imageElement.src = pokemon.sprites.front_default;
         imageElement.alt = pokemon.name;
         pokemonContainer.appendChild(imageElement);
     }
     else {
         console.log("Error, no image found!");
+        const placeholderText = document.createElement("p");
+        placeholderText.textContent = "No sprite found for this Pokémon!";
     }
     // create the ID description
     const pokemonIDElement = document.createElement("p");
@@ -57,3 +61,24 @@ function displayPokemonData(pokemon) {
     statElement.textContent = `Stats: ${stats}`;
     pokemonContainer.appendChild(statElement);
 }
+
+// async function playPokemonSound(pokemonId) {
+//     try {
+//         const response = await fetch(`https://pokeapi.com/api/v2/pokemon-species/${pokemonId}`);
+//         if (!response.ok) {
+//             throw new Error("Network returned code 201!")
+//         }
+//         const species = await response.json();
+//         const cryURL = species.cries;
+//         if (cryURL) {
+//             const audio = new Audio(cryURL);
+//             audio.play().catch(error => console.error(error));
+//         }
+//         else {
+//             console.error("No .ogg sound file found for this Pokémon!, check https://pokeapi.co for more details!");
+//         }
+
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
