@@ -10,11 +10,16 @@
 </head>
 
 <body>
-    <h1>Pokémon API</h1>
+    <header>
+        <h1>Pokémon API</h1>
+        <input type="text" id="search-input" placeholder="Search for a Pokémon..">
+        <button id="get-pokemon">Get a random pokemon!</button>
+    </header>
 
-    <button id="get-pokemon">Get pokemon!</button>
+    <div id="loading">Loading...</div>
 
     <div id="pokemon-container">
+        <div id="pokemon"></div>
     </div>
 </body>
 

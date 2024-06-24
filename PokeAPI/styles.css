@@ -15,13 +15,32 @@ h1 {
     padding-top: 8px;
 }
 
+header {
+    background-color: #460c4c;
+    color: #ffffff;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
 #pokemon-container {
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    height: auto;
     align-items: center;
     justify-content: center;
     margin-top: 25px;
+}
+
+#pokemon {
+    margin-top: 20px;
+    background-color: none;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
 }
 
 #pokemon-container img {
@@ -33,6 +52,18 @@ h1 {
 
 #pokemon-container p {
     font-size: 20px;
+}
+
+#loading {
+    display: none;
+}
+
+input[type="text"] {
+    border: none;
+    width: 12rem;
+    height: 2rem;
+    border-radius: 8px;
+    text-align: center;
 }
 
 button {
@@ -54,6 +85,13 @@ button:hover {
 
 @media (max-width: 600px) {
 
+    h1 {
+        font-size: small;
+    }
+
+    #pokemon {
+        width: 90%;
+    }
 
     #pokemon-container img {
         width: 100%;
@@ -62,5 +100,15 @@ button:hover {
 
     #pokemon-container p {
         font-size: 16px;
+    }
+
+    input {
+        width: auto;
+        height: auto;
+    }
+
+    button {
+        width: auto;
+        height: auto;
     }
 }

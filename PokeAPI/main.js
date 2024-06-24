@@ -1,21 +1,61 @@
 console.log("Hello World!");
 
 const getPokemon = document.getElementById("get-pokemon");
+getPokemon.addEventListener("click", fetchPokemon);
 
-getPokemon.addEventListener("click", async () => {
+document.getElementById("search-input").addEventListener("keyup", function (event) {
+    if (event.key === "Enter") {
+        fetchPokemonByName(event.target.value.toLowerCase());
+    }
+});
+
+
+
+async function fetchPokemon() {
+    const loadingElement = document.getElementById("loading");
+    const pokemonContainer = document.getElementById("pokemon-container");
+    loadingElement.style.display = "block";
+    pokemonContainer.textContent = "";
+
     try {
-        const getRandomID = Math.floor(Math.random() * 898) + 1;
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${getRandomID}`);
+        const randomID = Math.floor(Math.random() * 1010) + 1;
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomID}`);
+        // If we do not get a 200 HTTP Code, we throw a new Error!
+        if (!response.ok) {
+            throw new Error("Network response was not 200!");
+        }
         const pokemon = await response.json();
-        //console.log(pokemon);
         displayPokemonData(pokemon);
-        //playPokemonSound(getRandomID);
+        //playSound(randomID);
+    } catch (error) {
+        console.error("Error fetching the data from the API", error);
+        pokemonContainer.textContent = "Failed to get the requested Pokémon from the API, please try again..";
+    } finally {
+        loadingElement.style.display = "none";
     }
-    catch (error) {
-        console.error("Error fetching Pokémon data from the API: ", error);
-    }
-})
+}
 
+async function fetchPokemonByName(name) {
+    const loadingElement = document.getElementById("loading");
+    const pokemonContainer = document.getElementById("pokemon-container");
+    loadingElement.style.display = "block";
+    pokemonContainer.textContent = "";
+
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        if (!response.ok) {
+            throw new Error("Network did not respond with HTTP Code 200");
+        }
+        const pokemon = await response.json();
+        displayPokemonData(pokemon);
+        //playSound(name);
+    } catch (error) {
+        console.error("Error fetching data from the API", error);
+        pokemonContainer.textContent = "Failed to get the requested Pokémon from the API, please try again..";
+    } finally {
+        loadingElement.style.display = "none";
+    }
+}
 
 function displayPokemonData(pokemon) {
     // create the pokemon container
@@ -62,23 +102,24 @@ function displayPokemonData(pokemon) {
     pokemonContainer.appendChild(statElement);
 }
 
-// async function playPokemonSound(pokemonId) {
-//     try {
-//         const response = await fetch(`https://pokeapi.com/api/v2/pokemon-species/${pokemonId}`);
-//         if (!response.ok) {
-//             throw new Error("Network returned code 201!")
-//         }
-//         const species = await response.json();
-//         const cryURL = species.cries;
-//         if (cryURL) {
-//             const audio = new Audio(cryURL);
-//             audio.play().catch(error => console.error(error));
-//         }
-//         else {
-//             console.error("No .ogg sound file found for this Pokémon!, check https://pokeapi.co for more details!");
-//         }
-
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
+/*
+async function playSound(pokemonID) {
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemonID}`);
+        if (!response.ok) {
+            throw new Error("Network did not respond with HTTP Code 200");
+        }
+        const species = await response.json();
+        const soundURL = species.cries?.latest;
+        if (soundURL) {
+            const audio = new Audio(soundURL);
+            audio.play().catch(error => console.error("Error playing the sound!", error));
+        }
+        else {
+            console.error("No sound found for this pokemon!");
+        }
+    } catch (error) {
+        console.error("Error fetching the sound from the API");
+    }
+}
+*/
