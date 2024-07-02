@@ -84,7 +84,7 @@ greetingText.addEventListener("click", removeText);
  * Til å spille av en mp3 fil i nettleseren.
  */
 
-const audio = new Audio("../JavaScript/audio/It's Always Sunny in Philadelphia Theme [idoYCVLh2qI].mp3");
+const audio = new Audio("../JavaScript/audio/min-mp3-fil.mp3");
 
 // hent knappene fra DOM
 const startButton = document.getElementById("start-button");
